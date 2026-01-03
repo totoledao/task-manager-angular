@@ -1,3 +1,108 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
 
-@import "tailwindcss";
+@font-face {
+  font-family: 'Archivo';
+  src: url('/assets/fonts/Archivo-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@theme {
+  --color-*: initial;
+  --font-sans: 'Archivo', 'sans-serif';
+
+  --color-accent-brand: #2a89ef;
+  --color-accent-brand-white: #ecf4fe;
+  --color-accent-brand-blue: #0a53a1;
+  --color-accent-red: #e61e32;
+  --color-accent-green: #15be78;
+  --color-accent-orange: #ff850a;
+
+  /* light theme variables */
+  --color-text-h: #080b12;
+  --color-text-p: #374151;
+  --color-text-span: #9ca3af;
+  --color-text-placeholder: #89919f;
+  --color-text-invert: #fff;
+
+  --color-bg-primary: #fff;
+  --color-bg-secondary: #d7d8d8;
+  --color-bg-surface: #fafafa;
+
+  --color-border-primary: #d1d5db;
+  --color-border-secondary: #636d7e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text-h: #f9fafb;
+    --color-text-p: #d1d5db;
+    --color-text-span: #6b7280;
+    --color-text-placeholder: #9ca3af;
+    --color-text-invert: #080b12;
+
+    --color-bg-primary: #080b12;
+    --color-bg-secondary: #111827;
+    --color-bg-surface: #374151;
+
+    --color-border-primary: #374151;
+    --color-border-secondary: #4b5563;
+  }
+}
+
+@utility heading-large {
+  @apply text-2xl font-bold;
+  line-height: 1.3;
+}
+@utility heading-medium {
+  @apply text-lg font-bold;
+  line-height: 1.3;
+}
+@utility paragraph-large {
+  @apply text-[1rem] font-normal;
+  line-height: 1.6;
+}
+@utility paragraph-medium {
+  @apply text-sm font-normal;
+  line-height: 1.6;
+}
+@utility paragraph-small {
+  @apply text-xs font-normal;
+  line-height: 1.6;
+}
+@utility label-medium {
+  @apply text-[1rem] font-semibold;
+  line-height: 1.6;
+}
+@utility label-small {
+  @apply text-sm font-semibold;
+  line-height: 1.6;
+}
+@utility link {
+  @apply text-xs font-semibold;
+  line-height: 1.6;
+}
+
+html {
+  background: var(--color-bg-primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text-h);
+}
+
+p {
+  color: var(--color-text-p);
+}
+
+span {
+  color: var(--color-text-span);
+}
+
+input::placeholder {
+  color: var(--color-text-placeholder);
+}
