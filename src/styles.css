@@ -82,27 +82,29 @@
   line-height: 1.6;
 }
 
-html {
-  background: var(--color-bg-primary);
-}
+@layer base {
+  html {
+    background: var(--color-bg-primary);
+  }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--color-text-h);
-}
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-text-h);
+  }
 
-p {
-  color: var(--color-text-p);
-}
+  p {
+    color: var(--color-text-p);
+  }
 
-span {
-  color: var(--color-text-span);
-}
+  span {
+    color: var(--color-text-span);
+  }
 
-input::placeholder {
-  color: var(--color-text-placeholder);
+  input::placeholder {
+    color: var(--color-text-placeholder);
+  }
 }
