@@ -1,3 +1,10 @@
-<button class="block bg-accent-brand-blue px-4 py-3 text-text-invert rounded-xl">
+<button
+  class="cursor-pointer flex gap-2 align-middle justify-center text-center bg-accent-brand-blue px-4 py-3 text-text-invert rounded-xl"
+  (click)="onCallback()"
+>
+  @if( leftIcon() ){
+  <p class="text-text-invert">{{ leftIcon() }}</p>
+  }
+
   <p class="text-text-invert label-medium">{{ text }}</p>
 </button>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-main-button',
@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class MainButton {
   text = 'New task';
+  leftIcon = input<null | string>(null);
+  callback = output<void>();
+
+  onCallback() {
+    this.callback.emit();
+  }
 }
