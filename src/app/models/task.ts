@@ -1,7 +1,7 @@
 export type TaskStatus = 'todo' | 'doing' | 'completed';
 
 export interface Task {
-  tile: string;
+  title: string;
   description: string;
 }
 
