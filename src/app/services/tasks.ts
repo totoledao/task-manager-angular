@@ -16,6 +16,11 @@ export class Tasks {
     return this.tasks();
   }
 
+  // Update all tasks
+  updateTasks(tasks: TaskList) {
+    this.tasks.update(() => tasks);
+  }
+
   // Create task
   addTask(task: Omit<Task, 'id'>) {
     this.tasks.update((taskList) => ({

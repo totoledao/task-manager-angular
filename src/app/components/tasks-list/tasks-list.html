@@ -4,43 +4,96 @@
   @if( tasks().todo.length === 0 && tasks().doing.length === 0 && tasks().completed.length === 0 ){
   <h3 class="heading-medium mb-2">You have no tasks!</h3>
   } @else{
-  <div class="grid grid-cols-3 gap-6">
-    <ng-container
-      *ngTemplateOutlet="column; context: { status: 'to do', taskList: tasks().todo }"
-    ></ng-container>
-    <ng-container
-      *ngTemplateOutlet="column; context: { status: 'doing', taskList: tasks().doing }"
-    ></ng-container>
-    <ng-container
-      *ngTemplateOutlet="column; context: { status: 'completed', taskList: tasks().completed }"
-    ></ng-container>
+  <div class="grid grid-cols-3 gap-6" cdkDropListGroup>
+    <!-- Todo Column -->
+    <div class="p-4">
+      <div class="flex mb-4 items-center">
+        <h2 class="heading-medium">Todo</h2>
+        <h2
+          class="heading-medium ml-8 w-10 h-10 flex items-center justify-center bg-accent-brand text-white rounded-full"
+        >
+          {{ tasks().todo.length }}
+        </h2>
+      </div>
+      <div
+        cdkDropList
+        [cdkDropListData]="tasks().todo"
+        (cdkDropListDropped)="drop($event)"
+        class="space-y-3 min-h-50"
+      >
+        @for (task of tasks().todo; track task.id) {
+        <div
+          cdkDrag
+          class="bg-bg-secondary rounded-lg p-4 border border-accent-brand-white cursor-move"
+        >
+          <div class="cursor-grab active:cursor-grabbing">
+            <h3 class="heading-medium mb-2">{{ task.title }}</h3>
+            <p class="paragraph-medium">{{ task.description }}</p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Doing Column -->
+    <div class="p-4">
+      <div class="flex mb-4 items-center">
+        <h2 class="heading-medium">Doing</h2>
+        <h2
+          class="heading-medium ml-8 w-10 h-10 flex items-center justify-center bg-accent-brand text-white rounded-full"
+        >
+          {{ tasks().doing.length }}
+        </h2>
+      </div>
+      <div
+        cdkDropList
+        [cdkDropListData]="tasks().doing"
+        (cdkDropListDropped)="drop($event)"
+        class="space-y-3 min-h-50"
+      >
+        @for (task of tasks().doing; track task.id) {
+        <div
+          cdkDrag
+          class="bg-bg-secondary rounded-lg p-4 border border-accent-brand-white cursor-move"
+        >
+          <div class="cursor-grab active:cursor-grabbing">
+            <h3 class="heading-medium mb-2">{{ task.title }}</h3>
+            <p class="paragraph-medium">{{ task.description }}</p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
+
+    <!-- Completed Column -->
+    <div class="p-4">
+      <div class="flex mb-4 items-center">
+        <h2 class="heading-medium">Completed</h2>
+        <h2
+          class="heading-medium ml-8 w-10 h-10 flex items-center justify-center bg-accent-brand text-white rounded-full"
+        >
+          {{ tasks().completed.length }}
+        </h2>
+      </div>
+      <div
+        cdkDropList
+        [cdkDropListData]="tasks().completed"
+        (cdkDropListDropped)="drop($event)"
+        class="space-y-3 min-h-50"
+      >
+        @for (task of tasks().completed; track task.id) {
+        <div
+          cdkDrag
+          class="bg-bg-secondary rounded-lg p-4 border border-accent-brand-white cursor-move"
+        >
+          <div class="cursor-grab active:cursor-grabbing">
+            <h3 class="heading-medium mb-2">{{ task.title }}</h3>
+            <p class="paragraph-medium">{{ task.description }}</p>
+          </div>
+        </div>
+        }
+      </div>
+    </div>
   </div>
   }
 </div>
-
-<!-- Column template -->
-<ng-template #column let-status="status" let-taskList="taskList">
-  <div class="p-4">
-    <div class="flex mb-4 items-center">
-      <h2 class="heading-medium capitalize">{{ status }}</h2>
-      <h2
-        class="heading-medium ml-8 w-10 h-10 flex items-center justify-center bg-accent-brand text-white rounded-full"
-      >
-        {{ taskList.length }}
-      </h2>
-    </div>
-    <div class="space-y-3">
-      @for (task of taskList; track task.id) {
-      <ng-container *ngTemplateOutlet="taskCard; context: { $implicit: task }"></ng-container>
-      }
-    </div>
-  </div>
-</ng-template>
-
-<!-- Card template -->
-<ng-template #taskCard let-task>
-  <div class="bg-bg-secondary rounded-lg p-4 border border-accent-brand-white">
-    <h3 class="heading-medium mb-2">{{ task.title }}</h3>
-    <p class="paragraph-medium">{{ task.description }}</p>
-  </div>
-</ng-template>
