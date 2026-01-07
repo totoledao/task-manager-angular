@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { TaskList } from '../models/task';
+import { Task, TaskList, TaskStatus } from '../models/task';
 
 @Injectable({
   providedIn: 'root',
@@ -10,4 +10,35 @@ export class Tasks {
     doing: [],
     completed: [],
   });
+
+  // Get all tasks
+  getTasks(): TaskList {
+    return this.tasks();
+  }
+
+  // Create task
+  addTask(task: Task) {
+    this.tasks.update((taskList) => ({
+      ...taskList,
+      todo: [...taskList.todo, task],
+    }));
+  }
+
+  // Update status
+  moveTask(task: Task, fromStatus: TaskStatus, toStatus: TaskStatus) {
+    this.tasks.update((taskList) => ({
+      ...taskList,
+      [fromStatus]: taskList[fromStatus].filter((t) => t !== task),
+      [toStatus]: [...taskList[toStatus], task],
+    }));
+  }
+
+  // Delete task
+  deleteTask(task: Task) {
+    this.tasks.update((taskList) => ({
+      todo: taskList.todo.filter((t) => t !== task),
+      doing: taskList.doing.filter((t) => t !== task),
+      completed: taskList.completed.filter((t) => t !== task),
+    }));
+  }
 }
