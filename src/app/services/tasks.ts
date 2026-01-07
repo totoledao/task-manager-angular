@@ -17,10 +17,10 @@ export class Tasks {
   }
 
   // Create task
-  addTask(task: Task) {
+  addTask(task: Omit<Task, 'id'>) {
     this.tasks.update((taskList) => ({
       ...taskList,
-      todo: [...taskList.todo, task],
+      todo: [...taskList.todo, { ...task, id: crypto.randomUUID() }],
     }));
   }
 
