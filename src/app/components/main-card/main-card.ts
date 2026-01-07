@@ -26,7 +26,7 @@ export class MainCard {
       actions: [
         {
           title: 'Create Task',
-          action: () => this.createTask(),
+          callback: () => this.createTask(),
         },
       ],
     });
