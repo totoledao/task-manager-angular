@@ -4,13 +4,14 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Task } from '../../models/task';
 import { Tasks } from '../../services/tasks';
 
 @Component({
   selector: 'app-tasks-list',
-  imports: [DragDropModule],
+  imports: [DragDropModule, NgTemplateOutlet],
   templateUrl: './tasks-list.html',
 })
 export class TasksList {
