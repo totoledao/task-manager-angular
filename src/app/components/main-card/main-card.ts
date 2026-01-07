@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Tasks } from '../../services/tasks';
 import { MainButton } from '../main-button/main-button';
 
 @Component({
@@ -8,7 +9,12 @@ import { MainButton } from '../main-button/main-button';
   styles: ``,
 })
 export class MainCard {
+  tasksService = inject(Tasks);
+
   createTask() {
-    console.log('Callback from parent');
+    this.tasksService.addTask({
+      title: 'test',
+      description: 'test',
+    });
   }
 }
