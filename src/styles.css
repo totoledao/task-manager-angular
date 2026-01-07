@@ -85,6 +85,7 @@
 @layer base {
   html {
     background: var(--color-bg-primary);
+    color: var(--color-text-h);
   }
 
   h1,

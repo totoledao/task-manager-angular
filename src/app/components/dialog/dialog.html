@@ -1,0 +1,16 @@
+<div class="bg-bg-surface rounded-xl shadow-xl max-w-md w-full p-6">
+  <h2 class="heading-medium mb-4">{{ data?.title }}</h2>
+
+  <div class="paragraph-medium mb-6">{{ data?.content }}</div>
+
+  <div class="flex justify-end space-x-4">
+    @if(data?.cancelAction) {
+    <button class="cursor-pointer" (click)="close()"><p>Cancel</p></button>
+    } @for(action of data?.actions; track action) {
+    <app-main-button
+      title="{{ action.title }}"
+      (callback)="action.action(); close()"
+    ></app-main-button>
+    }
+  </div>
+</div>

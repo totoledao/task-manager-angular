@@ -6,7 +6,7 @@ import { Component, input, output } from '@angular/core';
   templateUrl: './main-button.html',
 })
 export class MainButton {
-  text = 'New task';
+  text = input('New task');
   leftIcon = input<null | string>(null);
   callback = output<void>();
 
