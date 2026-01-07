@@ -1,6 +1,9 @@
+import { TemplateRef } from '@angular/core';
+import { MainButton } from './mainButton';
+
 export interface DialogData {
   title: string;
-  content?: string;
-  cancelAction?: boolean;
-  actions?: Array<{ title: string; action: () => void }>;
+  content?: TemplateRef<any>;
+  cancelAction: boolean;
+  actions: MainButton[];
 }

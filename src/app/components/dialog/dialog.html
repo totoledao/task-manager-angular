@@ -1,15 +1,20 @@
 <div class="bg-bg-surface rounded-xl shadow-xl max-w-md w-full p-6">
   <h2 class="heading-medium mb-4">{{ data?.title }}</h2>
 
-  <div class="paragraph-medium mb-6">{{ data?.content }}</div>
+  <!-- Render template if provided -->
+  @if (data?.content) {
+  <ng-container *ngTemplateOutlet="data?.content"></ng-container>
+  }
 
-  <div class="flex justify-end space-x-4">
+  <div class="flex justify-end space-x-4 mt-6">
     @if(data?.cancelAction) {
-    <button class="cursor-pointer" (click)="close()"><p>Cancel</p></button>
+    <button class="cursor-pointer px-4 py-2 text-gray-600 hover:text-gray-800" (click)="close()">
+      Cancel
+    </button>
     } @for(action of data?.actions; track action) {
     <app-main-button
       title="{{ action.title }}"
-      (callback)="action.action(); close()"
+      (callback)="action.callback(); close()"
     ></app-main-button>
     }
   </div>

@@ -1,34 +1,43 @@
-import { Component, inject } from '@angular/core';
-import { DialogData } from '../../models/dialog';
+import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Dialog } from '../../services/dialog';
 import { Tasks } from '../../services/tasks';
 import { MainButton } from '../main-button/main-button';
 
 @Component({
   selector: 'app-main-card',
-  imports: [MainButton],
+  imports: [MainButton, FormsModule],
   templateUrl: './main-card.html',
-  styles: ``,
 })
 export class MainCard {
   tasksService = inject(Tasks);
   dialogService = inject(Dialog);
 
-  dialogData: DialogData = {
-    title: 'Test title',
-    content: 'Test content',
-    cancelAction: true,
-    actions: [{ title: 'Create task', action: () => this.createTask() }],
-  };
+  // Form create task
+  @ViewChild('taskForm') taskFormTemplate!: TemplateRef<any>;
+  taskTitle = '';
+  taskDescription = '';
 
   openNewTaskDialog() {
-    this.dialogService.open(this.dialogData);
+    this.dialogService.open({
+      title: 'Create New Task',
+      content: this.taskFormTemplate,
+      cancelAction: true,
+      actions: [
+        {
+          title: 'Create Task',
+          action: () => this.createTask(),
+        },
+      ],
+    });
   }
 
   createTask() {
     this.tasksService.addTask({
-      title: 'test',
-      description: 'test',
+      title: this.taskTitle,
+      description: this.taskDescription,
     });
+    this.taskTitle = '';
+    this.taskDescription = '';
   }
 }
