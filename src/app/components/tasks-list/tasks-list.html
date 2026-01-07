@@ -1,6 +1,9 @@
 <div class="container mx-auto p-6">
   <h1 class="text-3xl font-bold mb-8">Task Board</h1>
 
+  @if( tasks().todo.length === 0 && tasks().doing.length === 0 && tasks().completed.length === 0 ){
+  <h3 class="heading-medium mb-2">You have no tasks!</h3>
+  } @else{
   <div class="grid grid-cols-3 gap-6">
     <ng-container
       *ngTemplateOutlet="column; context: { status: 'to do', taskList: tasks().todo }"
@@ -12,12 +15,20 @@
       *ngTemplateOutlet="column; context: { status: 'completed', taskList: tasks().completed }"
     ></ng-container>
   </div>
+  }
 </div>
 
 <!-- Column template -->
 <ng-template #column let-status="status" let-taskList="taskList">
   <div class="p-4">
-    <h2 class="heading-medium mb-4 capitalize">{{ status }}</h2>
+    <div class="flex mb-4 items-center">
+      <h2 class="heading-medium capitalize">{{ status }}</h2>
+      <h2
+        class="heading-medium ml-8 w-10 h-10 flex items-center justify-center bg-accent-brand text-white rounded-full"
+      >
+        {{ taskList.length }}
+      </h2>
+    </div>
     <div class="space-y-3">
       @for (task of taskList; track task) {
       <ng-container *ngTemplateOutlet="taskCard; context: { $implicit: task }"></ng-container>
