@@ -1,7 +1,7 @@
 <div class="container mx-auto p-6">
   <h1 class="text-3xl font-bold mb-8">Task Board</h1>
 
-  @if( tasks().todo.length === 0 && tasks().doing.length === 0 && tasks().completed.length === 0 ){
+  @if( tasks().length === 0 ){
   <h3 class="heading-medium mb-2">You have no tasks!</h3>
   } @else{
   <div class="grid grid-cols-3 gap-6" cdkDropListGroup>
@@ -9,9 +9,9 @@
       *ngTemplateOutlet="
         column;
         context: {
-          status: 'Todo',
-          taskList: tasks().todo,
-          listId: 'todo'
+          title: 'To do',
+          taskList: todoTasks(),
+          status: 'todo'
         }
       "
     ></ng-container>
@@ -19,9 +19,9 @@
       *ngTemplateOutlet="
         column;
         context: {
-          status: 'Doing',
-          taskList: tasks().doing,
-          listId: 'doing'
+          title: 'Doing',
+          taskList: doingTasks(),
+          status: 'doing'
         }
       "
     ></ng-container>
@@ -29,9 +29,9 @@
       *ngTemplateOutlet="
         column;
         context: {
-          status: 'Completed',
-          taskList: tasks().completed,
-          listId: 'completed'
+          title: 'Completed',
+          taskList: completedTasks(),
+          status: 'completed'
         }
       "
     ></ng-container>
@@ -40,10 +40,10 @@
 </div>
 
 <!-- Column template -->
-<ng-template #column let-status="status" let-taskList="taskList" let-listId="listId">
+<ng-template #column let-title="title" let-taskList="taskList" let-status="status">
   <div class="p-4">
     <div class="flex mb-4 items-center">
-      <h2 class="heading-medium">{{ status }}</h2>
+      <h2 class="heading-medium">{{ title }}</h2>
       <h2
         class="heading-medium ml-8 w-10 h-10 flex items-center justify-center bg-accent-brand text-white rounded-full"
       >
@@ -52,10 +52,10 @@
     </div>
     <div
       cdkDropList
-      [id]="listId"
+      [id]="status"
       [cdkDropListData]="taskList"
       [cdkDropListConnectedTo]="['todo', 'doing', 'completed']"
-      (cdkDropListDropped)="drop($event)"
+      (cdkDropListDropped)="drop($event, status)"
       class="space-y-3 min-h-50"
     >
       @for (task of taskList; track task.id) {
