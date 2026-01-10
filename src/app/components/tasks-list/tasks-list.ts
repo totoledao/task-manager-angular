@@ -5,8 +5,8 @@ import {
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { Task } from '../../models/task';
+import { Component, computed, inject } from '@angular/core';
+import { Task, TaskStatus } from '../../models/task';
 import { Tasks } from '../../services/tasks';
 
 @Component({
@@ -16,20 +16,28 @@ import { Tasks } from '../../services/tasks';
 })
 export class TasksList {
   tasksService = inject(Tasks);
-  tasks = this.tasksService.tasks;
+  tasks = () => this.tasksService.getTasks();
+  todoTasks = () => this.tasksService.getTasksByStatus('todo');
+  doingTasks = () => this.tasksService.getTasksByStatus('doing');
+  completedTasks = () => this.tasksService.getTasksByStatus('completed');
 
-  drop(event: CdkDragDrop<Task[]>) {
-    if (event.previousContainer === event.container) {
-      // Reorder within same list
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      // Move to different list
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
+  drop(event: CdkDragDrop<Task[]>, newStatus: TaskStatus) {
+    const newArr = [...this.tasks()];
+
+    // Reorder list index
+    moveItemInArray(newArr, event.previousIndex, event.currentIndex);
+
+    // Move to different list
+    if (event.previousContainer !== event.container) {
+      const movedTask = event.previousContainer.data[event.previousIndex];
+      for (let task of newArr) {
+        if (task.id === movedTask.id) {
+          task.status = newStatus;
+        }
+      }
     }
+
+    // Update Tasks Service
+    this.tasksService.updateTasks(newArr);
   }
 }
