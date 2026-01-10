@@ -16,10 +16,10 @@ import { Tasks } from '../../services/tasks';
 })
 export class TasksList {
   tasksService = inject(Tasks);
-  tasks = () => this.tasksService.getTasks();
-  todoTasks = () => this.tasksService.getTasksByStatus('todo');
-  doingTasks = () => this.tasksService.getTasksByStatus('doing');
-  completedTasks = () => this.tasksService.getTasksByStatus('completed');
+  tasks = this.tasksService.tasks;
+  todoTasks = this.tasksService.todoTasks;
+  doingTasks = this.tasksService.doingTasks;
+  completedTasks = this.tasksService.completedTasks;
 
   drop(event: CdkDragDrop<Task[]>, newStatus: TaskStatus) {
     const newArr = [...this.tasks()];
